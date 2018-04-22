@@ -1,4 +1,16 @@
 .row {
   border: 1px solid black;
   height: 100px;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.field {
+  display: inline-block;
+  border: 1px solid black;  
+  height: 100px;
+  width: 100px;
+  margin: 0;
+  padding: 0;
 }
