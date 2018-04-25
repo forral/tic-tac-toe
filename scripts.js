@@ -4,9 +4,9 @@ fields = [...fields];
 
 var counter = 0;
 var board = {
-  1: 'X',
-  2: 'X',
-  3: 'X',
+  1: false,
+  2: false,
+  3: false,
   4: false,
   5: false,
   6: false,
@@ -24,20 +24,20 @@ var helpers = {
 }
 
 grid.addEventListener('click', function(e) {
-
   if (e.target.dataset.number && e.target.dataset.status === 'free') {
-    console.log(e.target.dataset.number, e.target.dataset.status);
     e.target.dataset.status = 'used-by-player-one';
     e.target.classList += ' ' + 'used-by-player-one';
     board[e.target.dataset.number] = 'X';
-    console.table(board);
     counter++;
+
+    checkWinner('X');
 
     if (counter === 9) {
       counter = 0;
       resetBoard();
     } else {
       AIRound();
+      checkWinner('O');
     }
   }
 });
@@ -60,7 +60,6 @@ function resetBoard() {
 }
 
 function AIRound() {
-  
   var played = false;
 
   while (played === false) {
@@ -72,7 +71,6 @@ function AIRound() {
       fields[spot - 1].dataset.status = 'used-by-player-two';
       fields[spot - 1].classList += ' ' + 'used-by-player-two';
       board[spot] = 'O';
-      console.table(board);
       counter++;
       played = true;
     }
@@ -83,24 +81,19 @@ function checkWinner(player) {
   // if any of the players can make one of these sequences, that player wons.
   var winFieldPositions = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]];
   var playerOne = player;
-  var counterTwo;
+  var counter;
 
   for (var i = 0; i < winFieldPositions.length; i++) {
-
-    counterTwo = 0;
-
+    counter = 0;
     for (var j = 0; j < winFieldPositions[i].length; j++) {
-
       if (board[winFieldPositions[i][j]] === playerOne) {
-        counterTwo++
+        counter++
       }
-
-      if (counterTwo === 3) {
-        console.log('Winner');
+      if (counter === 3) {
+        console.log('Player ' + playerOne + ' is the Winner!', 'With the combination: ' + winFieldPositions[i]);
         return;
       }
-
-
     }
   }
+  return 'there is no winners... yet';
 }
