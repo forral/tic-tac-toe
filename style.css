@@ -9,6 +9,10 @@
   line-height: 100px;
 }
 
-.used {
+.used-by-player-one {
   background: grey;
+}
+
+.used-by-player-two {
+  background: red;
 }
