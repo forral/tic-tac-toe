@@ -1,6 +1,7 @@
 var grid = document.querySelector('.grid');
 var fields = document.getElementsByClassName('field');
 fields = [...fields];
+var definePlayers = {};
 
 var counter = 0;
 var board = {
@@ -23,8 +24,6 @@ var helpers = {
   }
 }
 
-var definePlayers = {}
-
 function askWitchPlayer() {
   var answer = prompt('Do you want to play with X or O?');
   answer = answer.toUpperCase();
@@ -38,6 +37,7 @@ function askWitchPlayer() {
     definePlayers.player = 'O';
     definePlayers.computer = 'X';
     console.log('welcome player O');
+    AIRound();
   } else {
     askWitchPlayer()
   }
@@ -117,3 +117,5 @@ function checkWinner(player) {
   }
   return 'there is no winners... yet';
 }
+
+askWitchPlayer();
