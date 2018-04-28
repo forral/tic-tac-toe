@@ -23,21 +23,41 @@ var helpers = {
   }
 }
 
+var definePlayers = {}
+
+function askWitchPlayer() {
+  var answer = prompt('Do you want to play with X or O?');
+  answer = answer.toUpperCase();
+  console.log(answer);
+
+  if (answer === 'X') {
+    definePlayers.player = 'X';
+    definePlayers.computer = 'O';
+    console.log('welcome player X');
+  } else if (answer === 'O') {
+    definePlayers.player = 'O';
+    definePlayers.computer = 'X';
+    console.log('welcome player O');
+  } else {
+    askWitchPlayer()
+  }
+}
+
 grid.addEventListener('click', function(e) {
   if (e.target.dataset.number && e.target.dataset.status === 'free') {
     e.target.dataset.status = 'used-by-player-one';
     e.target.classList += ' ' + 'used-by-player-one';
-    board[e.target.dataset.number] = 'X';
+    board[e.target.dataset.number] = definePlayers.player;
     counter++;
 
-    checkWinner('X');
+    checkWinner(definePlayers.player);
 
     if (counter === 9) {
       counter = 0;
       resetBoard();
     } else {
       AIRound();
-      checkWinner('O');
+      checkWinner(definePlayers.computer);
     }
   }
 });
@@ -70,7 +90,7 @@ function AIRound() {
       // if so, market the spot.
       fields[spot - 1].dataset.status = 'used-by-player-two';
       fields[spot - 1].classList += ' ' + 'used-by-player-two';
-      board[spot] = 'O';
+      board[spot] = definePlayers.computer;
       counter++;
       played = true;
     }
